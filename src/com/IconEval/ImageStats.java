@@ -39,8 +39,8 @@ public class ImageStats implements Comparable<ImageStats> {
         Imgproc.erode(foregroundMask, foregroundMask, kernelErosion);
         Imgproc.dilate(foregroundMask, foregroundMask, kernelDilation);
 
-        int reducedHeight = 32;
-        int reducedWidth = 32;
+        int reducedHeight = 16;
+        int reducedWidth = 16;
 
         /*
         //These scales are for C64 Display
@@ -58,7 +58,7 @@ public class ImageStats implements Comparable<ImageStats> {
         Imgproc.cvtColor(bglab, bgFromLab, Imgproc.COLOR_Lab2BGR);
 
         //HighGui.imshow("Original " + fileName, img);
-        HighGui.imshow("BGLab " + fileName, bgFromLab);
+        //HighGui.imshow("BGLab " + fileName, bgFromLab);
         //HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
         //HighGui.imshow("Foreground" + fileName, foreground);
         reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
@@ -148,7 +148,7 @@ public class ImageStats implements Comparable<ImageStats> {
                             totalForegroundCount ++;
                             double[]colDataHSV = colourHSV.get(innery, innerx);
                             String colourName = ClassifyColour(colDataHSV);
-                            if (colourName != "unknown"){
+                            if (!colourName.equals("unknown")){
                                 if (foregroundColourTotal.containsKey(colourName)){
                                     foregroundColourTotal.put(colourName, foregroundColourTotal.get(colourName)+1);
                                 }

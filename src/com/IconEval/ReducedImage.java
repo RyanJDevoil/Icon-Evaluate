@@ -46,9 +46,9 @@ public class ReducedImage {
                 }
             }
         }
-        //Imgproc.cvtColor(colDisplay, colDisplay, Imgproc.COLOR_Lab2BGR);
         //HighGui.imshow("ReducedBW " + fileName, bWDisplay);
-        //HighGui.imshow("ReducedCol " + fileName, colDisplay);
+        Imgproc.cvtColor(colDisplay, colDisplay, Imgproc.COLOR_Lab2BGR);
+        HighGui.imshow("ReducedCol " + fileName, colDisplay);
         System.out.println(foregroundColourBreakdown);
 
         //Silly Thing - Reduced Rez
@@ -128,6 +128,7 @@ public class ReducedImage {
                     imgBGR.put(y, x, 204,68,204);
                 }
                 else {
+                    imgBGR.put(y, x, 0,0,0);
                     //return "unknown";
                 }
             }
