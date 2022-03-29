@@ -139,8 +139,8 @@ public class ImageCompare {
     }
 
     private double calcSimilarity(double backgroundDifferenceScore, double foregroundIntersectScore, double foregroundColourDiffScore, double colourBreakdownScore){
-        //50, 25, 12.5, 12.5
-        double similarity = 0.5*backgroundDifferenceScore+0.25*foregroundIntersectScore+0.125*foregroundColourDiffScore+0.125*colourBreakdownScore;
+        //40, 30, 15, 15
+        double similarity = 0.4*backgroundDifferenceScore+0.3*foregroundIntersectScore+0.15*foregroundColourDiffScore+0.15*colourBreakdownScore;
         return similarity;
     }
 }
