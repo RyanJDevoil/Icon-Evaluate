@@ -5,12 +5,11 @@ import org.opencv.highgui.HighGui;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ReducedImage {
     int[][] reducedProfileShape;
     Scalar[][] reducedProfileColour;
-    Map<String, Double> foregroundColourBreakdown;
+    HashMap<String, Double> foregroundColourBreakdown;
 
     public ReducedImage(int[][] reducedProfileShape, Scalar[][] reducedProfileColour, HashMap<String, Double> foregroundColourBreakdown) {
         this.reducedProfileShape = reducedProfileShape;
@@ -26,7 +25,7 @@ public class ReducedImage {
         return reducedProfileColour;
     }
 
-    public Map<String, Double> getFCB() {
+    public HashMap<String, Double> getFCB() {
         return foregroundColourBreakdown;
     }
 
@@ -47,9 +46,9 @@ public class ReducedImage {
             }
         }
         //HighGui.imshow("ReducedBW " + fileName, bWDisplay);
-        Imgproc.cvtColor(colDisplay, colDisplay, Imgproc.COLOR_Lab2BGR);
-        HighGui.imshow("ReducedCol " + fileName, colDisplay);
-        System.out.println(foregroundColourBreakdown);
+        //Imgproc.cvtColor(colDisplay, colDisplay, Imgproc.COLOR_Lab2BGR);
+        //HighGui.imshow("ReducedCol " + fileName, colDisplay);
+        //System.out.println(foregroundColourBreakdown);
 
         //Silly Thing - Reduced Rez
         //DisplayC64isedImage(colDisplay, fileName);

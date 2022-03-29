@@ -18,6 +18,8 @@ public class ImageStats implements Comparable<ImageStats> {
     ReducedImage reduced;
 
     public ImageStats(Mat img, String fileName){
+        this.fileName = fileName;
+
         Mat CIELab = new Mat();
         Mat HSV = new Mat();
 
@@ -53,15 +55,15 @@ public class ImageStats implements Comparable<ImageStats> {
         //Debug code
 
         //Mat foreground = mask(foregroundMask, img);
-        Mat bgFromLab = new Mat();
-        Mat bglab = new Mat(img.size(), img.type(), new Scalar(bgCol[0], bgCol[1], bgCol[2]));
-        Imgproc.cvtColor(bglab, bgFromLab, Imgproc.COLOR_Lab2BGR);
+        //Mat bgFromLab = new Mat();
+        //Mat bglab = new Mat(img.size(), img.type(), new Scalar(bgCol[0], bgCol[1], bgCol[2]));
+        //Imgproc.cvtColor(bglab, bgFromLab, Imgproc.COLOR_Lab2BGR);
 
         //HighGui.imshow("Original " + fileName, img);
         //HighGui.imshow("BGLab " + fileName, bgFromLab);
         //HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
         //HighGui.imshow("Foreground" + fileName, foreground);
-        reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
+        //reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
 
         //Silly Thing - Full Rez
         //ReducedImage.DisplayC64isedImage(img, fileName);
