@@ -50,30 +50,30 @@ public class ImageCompare {
             PrintWriter writer = new PrintWriter(outputBufferedWriter);
             if(similarity>50){
                 writer.println("High overall similarity found between: " + fileNameA + " and " +fileNameB);
-                writer.println("Overall Similarity: " + similarity + "/100");
-                writer.println("Background Similarity: " + backgroundDifferenceScore + "/100");
-                writer.println("Foreground Shape Similarity: " + foregroundIntersectScore + "/100");
-                writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore + "/100");
-                writer.println("Colour Usage Similarity: " + colourBreakdownScore + "/100");
+                writer.println("Overall Similarity: " + Math.round(similarity) + "/100");
+                writer.println("Background Similarity: " + Math.round(backgroundDifferenceScore) + "/100");
+                writer.println("Foreground Shape Similarity: " + Math.round(foregroundIntersectScore) + "/100");
+                writer.println("Foreground Colour Placement Similarity: " + Math.round(foregroundColourDiffScore) + "/100");
+                writer.println("Colour Usage Similarity: " + Math.round(colourBreakdownScore) + "/100");
                 writer.println();
             }
             else{
                 writer.println("Low overall similarity found between: " + fileNameA + " and " +fileNameB);
                 if(backgroundDifferenceScore > 50){
                     writer.println("However background colour similarity is high.");
-                    writer.println("Background Similarity: " + backgroundDifferenceScore + "/100");
+                    writer.println("Background Similarity: " + Math.round(backgroundDifferenceScore) + "/100");
                 }
                 if(foregroundIntersectScore > 50){
                     writer.println("However foreground shape similarity is high.");
-                    writer.println("Foreground Shape Similarity: " + foregroundIntersectScore + "/100");
+                    writer.println("Foreground Shape Similarity: " + Math.round(foregroundIntersectScore) + "/100");
                 }
                 if(foregroundColourDiffScore > 50){
                     writer.println("However similar colours are used in similar places.");
-                    writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore + "/100");
+                    writer.println("Foreground Colour Placement Similarity: " + Math.round(foregroundColourDiffScore) + "/100");
                 }
                 if(colourBreakdownScore > 50){
                     writer.println("However similar colours are used to make up the icon.");
-                    writer.println("Colour Usage Similarity: " + colourBreakdownScore + "/100");
+                    writer.println("Colour Usage Similarity: " + Math.round(colourBreakdownScore) + "/100");
                 }
                 writer.println();
             }
@@ -97,31 +97,33 @@ public class ImageCompare {
         }
         double midY= (double)(reducedProfileB.length-1)/2;
         double midX= (double)(reducedProfileA[0].length-1)/2;
-        double maxScore = 0;
-        double score = 0;
+        double maxShapeScore = 0;
+        double shapeScore = 0;
         double totalColourDistance = 0;
         int numIntersecting = 0;
+        int numTotal = 0;
         for (int y = 0; y < reducedProfileA.length; y++){
             for (int x = 0; x < reducedProfileA[0].length; x++){
                 if (reducedProfileA[y][x] == 1 || reducedProfileB[y][x] == 1){
                     double weightedVal = Math.pow((Math.sqrt(Math.pow(y-midY, 2)+Math.pow(x-midX, 2))/4), 2);
+                    numTotal += 1;
                     if (reducedProfileA[y][x] == 1 && reducedProfileB[y][x] == 1){
-                        maxScore += weightedVal;
-                        score += weightedVal;
+                        maxShapeScore += weightedVal;
+                        shapeScore += weightedVal;
 
                         numIntersecting += 1;
                         totalColourDistance += Math.sqrt(Math.pow(((reducedColourA[y][x].val[0]/255)*100)-((reducedColourB[y][x].val[0]/255)*100), 2)+Math.pow((reducedColourA[y][x].val[1]-128)-(reducedColourB[y][x].val[1]-128), 2)+Math.pow((reducedColourA[y][x].val[2]-128)-(reducedColourB[y][x].val[2]-128), 2));
 
                     }
                     else {
-                        maxScore += weightedVal;
+                        maxShapeScore += weightedVal;
                     }
                 }
             }
         }
-        double normalisedScore = (score/maxScore)*100;
-        double avgColourDistanceScore = Math.max(100-(totalColourDistance/numIntersecting), 0);
-        double[] output = {normalisedScore, avgColourDistanceScore};
+        double normalisedShapeScore = (shapeScore/maxShapeScore)*100;
+        double avgColourDistanceScore = Math.max((100-(totalColourDistance/numIntersecting))/(numTotal/numIntersecting), 0);
+        double[] output = {normalisedShapeScore, avgColourDistanceScore};
         return output;
     }
     private double calcColourBreakdownScore(HashMap<String, Double> colourBreakdownA, HashMap<String, Double> colourBreakdownB){

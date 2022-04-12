@@ -63,6 +63,8 @@ public class ImageStats{
         HighGui.imshow("BGLab " + fileName, bgFromLab);
         HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
         HighGui.imshow("Foreground" + fileName, foreground);
+        */
+        ///*
         reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
         //*/
 
@@ -109,7 +111,7 @@ public class ImageStats{
     }
     private static Mat thresholdLab(Mat hsv, Double[] bgCol){
         Mat threshold = new Mat();
-        Core.inRange(hsv, new Scalar(bgCol[0]-64, bgCol[1]-20, bgCol[2]-20), new Scalar(bgCol[0]+64, bgCol[1]+20, bgCol[2]+20), threshold );
+        Core.inRange(hsv, new Scalar(bgCol[0]-64, bgCol[1]-32, bgCol[2]-32), new Scalar(bgCol[0]+64, bgCol[1]+32, bgCol[2]+32), threshold );
         Core.bitwise_not(threshold, threshold);
         return threshold;
     }
