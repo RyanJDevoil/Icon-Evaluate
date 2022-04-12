@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-public class ImageStats implements Comparable<ImageStats> {
+public class ImageStats{
     String fileName;
     Double[] bgCol;
     ReducedImage reduced;
@@ -36,34 +36,35 @@ public class ImageStats implements Comparable<ImageStats> {
         int colsErosion = Math.max(img.cols()/100, 1);
         int rowsDilation = Math.max(img.rows()/175, 1);
         int colsDilation = Math.max(img.cols()/175, 1);
+        ///*
         Mat kernelErosion = Mat.ones(rowsErosion,colsErosion, CvType.CV_32F);
         Mat kernelDilation = Mat.ones(rowsDilation,colsDilation, CvType.CV_32F);
         Imgproc.erode(foregroundMask, foregroundMask, kernelErosion);
         Imgproc.dilate(foregroundMask, foregroundMask, kernelDilation);
-
-        int reducedHeight = 16;
-        int reducedWidth = 16;
+        //*/
+        int reducedHeight = 32;
+        int reducedWidth = 32;
 
         /*
         //These scales are for C64 Display
-        reducedHeight = 150;
-        reducedWidth = 150;
+        reducedHeight = 120;
+        reducedWidth = 160;
         //*/
 
         reduced = reduceProfileComplexity(foregroundMask, CIELab, HSV, reducedHeight, reducedWidth, 8);
 
         //Debug code
-
-        //Mat foreground = mask(foregroundMask, img);
-        //Mat bgFromLab = new Mat();
-        //Mat bglab = new Mat(img.size(), img.type(), new Scalar(bgCol[0], bgCol[1], bgCol[2]));
-        //Imgproc.cvtColor(bglab, bgFromLab, Imgproc.COLOR_Lab2BGR);
-
-        //HighGui.imshow("Original " + fileName, img);
-        //HighGui.imshow("BGLab " + fileName, bgFromLab);
-        //HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
-        //HighGui.imshow("Foreground" + fileName, foreground);
-        //reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
+        /*
+        Mat foreground = mask(foregroundMask, img);
+        Mat bgFromLab = new Mat();
+        Mat bglab = new Mat(img.size(), img.type(), new Scalar(bgCol[0], bgCol[1], bgCol[2]));
+        Imgproc.cvtColor(bglab, bgFromLab, Imgproc.COLOR_Lab2BGR);
+        HighGui.imshow("Original " + fileName, img);
+        HighGui.imshow("BGLab " + fileName, bgFromLab);
+        HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
+        HighGui.imshow("Foreground" + fileName, foreground);
+        reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
+        //*/
 
         //Silly Thing - Full Rez
         //ReducedImage.DisplayC64isedImage(img, fileName);
@@ -102,12 +103,13 @@ public class ImageStats implements Comparable<ImageStats> {
 
             }
         }
-
+        //Imgproc.cvtColor(img, img, Imgproc.COLOR_Lab2BGR);
+        //HighGui.imshow("Original ", img);
         return (Collections.max(detColours.entrySet(), Map.Entry.comparingByValue()).getKey()).toArray(new Double[3]);
     }
     private static Mat thresholdLab(Mat hsv, Double[] bgCol){
         Mat threshold = new Mat();
-        Core.inRange(hsv, new Scalar(bgCol[0]-64, bgCol[1]-40, bgCol[2]-40), new Scalar(bgCol[0]+64, bgCol[1]+40, bgCol[2]+40), threshold );
+        Core.inRange(hsv, new Scalar(bgCol[0]-64, bgCol[1]-20, bgCol[2]-20), new Scalar(bgCol[0]+64, bgCol[1]+20, bgCol[2]+20), threshold );
         Core.bitwise_not(threshold, threshold);
         return threshold;
     }
@@ -252,8 +254,4 @@ public class ImageStats implements Comparable<ImageStats> {
         return (int) Math.round(val/precision) * precision;
     }
 
-    @Override
-    public int compareTo(ImageStats o) {
-        return 0;
-    }
 }

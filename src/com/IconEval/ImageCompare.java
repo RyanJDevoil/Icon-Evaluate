@@ -38,7 +38,7 @@ public class ImageCompare {
         System.out.println("Foreground Shape Similarity: " + foregroundIntersectScore);
         System.out.println("Foreground Colour Similarity: " + foregroundColourDiffScore);
         System.out.println("Colour Usage Similarity: " + colourBreakdownScore);
-         */
+        //*/
 
         try{
             File outputFile = new File("Similarity Report.txt");
@@ -50,30 +50,30 @@ public class ImageCompare {
             PrintWriter writer = new PrintWriter(outputBufferedWriter);
             if(similarity>50){
                 writer.println("High overall similarity found between: " + fileNameA + " and " +fileNameB);
-                writer.println("Overall Similarity: " + similarity);
-                writer.println("Background Similarity: " + backgroundDifferenceScore);
-                writer.println("Foreground Shape Similarity: " + foregroundIntersectScore);
-                writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore);
-                writer.println("Colour Usage Similarity: " + colourBreakdownScore);
+                writer.println("Overall Similarity: " + similarity + "/100");
+                writer.println("Background Similarity: " + backgroundDifferenceScore + "/100");
+                writer.println("Foreground Shape Similarity: " + foregroundIntersectScore + "/100");
+                writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore + "/100");
+                writer.println("Colour Usage Similarity: " + colourBreakdownScore + "/100");
                 writer.println();
             }
             else{
                 writer.println("Low overall similarity found between: " + fileNameA + " and " +fileNameB);
                 if(backgroundDifferenceScore > 50){
                     writer.println("However background colour similarity is high.");
-                    writer.println("Background Similarity: " + backgroundDifferenceScore);
+                    writer.println("Background Similarity: " + backgroundDifferenceScore + "/100");
                 }
                 if(foregroundIntersectScore > 50){
                     writer.println("However foreground shape similarity is high.");
-                    writer.println("Foreground Shape Similarity: " + foregroundIntersectScore);
+                    writer.println("Foreground Shape Similarity: " + foregroundIntersectScore + "/100");
                 }
                 if(foregroundColourDiffScore > 50){
                     writer.println("However similar colours are used in similar places.");
-                    writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore);
+                    writer.println("Foreground Colour Similarity: " + foregroundColourDiffScore + "/100");
                 }
                 if(colourBreakdownScore > 50){
                     writer.println("However similar colours are used to make up the icon.");
-                    writer.println("Colour Usage Similarity: " + colourBreakdownScore);
+                    writer.println("Colour Usage Similarity: " + colourBreakdownScore + "/100");
                 }
                 writer.println();
             }
@@ -84,8 +84,8 @@ public class ImageCompare {
         }
     }
     private double calcColourDifferenceScore(Double[] colA, Double[] colB){
-        Double[] colARealLab = {(colA[0]/256)*100, colA[1], colA[2]};
-        Double[] colBRealLab = {(colB[0]/256)*100, colB[1], colB[2]};
+        Double[] colARealLab = {(colA[0]/255)*100, colA[1]-128, colA[2]-128};
+        Double[] colBRealLab = {(colB[0]/255)*100, colB[1]-128, colB[2]-128};
         double difBetweenAB = (Math.sqrt(Math.pow(colARealLab[0]-colBRealLab[0], 2) + Math.pow(colARealLab[1]-colBRealLab[1], 2) + Math.pow(colARealLab[2]-colBRealLab[2], 2)));
         return (Math.max((100-difBetweenAB), 0));
     }
@@ -110,7 +110,7 @@ public class ImageCompare {
                         score += weightedVal;
 
                         numIntersecting += 1;
-                        totalColourDistance += Math.sqrt(Math.pow(reducedColourA[y][x].val[0]-reducedColourB[y][x].val[0], 2)+Math.pow(reducedColourA[y][x].val[1]-reducedColourB[y][x].val[1], 2)+Math.pow(reducedColourA[y][x].val[2]-reducedColourB[y][x].val[2], 2));
+                        totalColourDistance += Math.sqrt(Math.pow(((reducedColourA[y][x].val[0]/255)*100)-((reducedColourB[y][x].val[0]/255)*100), 2)+Math.pow((reducedColourA[y][x].val[1]-128)-(reducedColourB[y][x].val[1]-128), 2)+Math.pow((reducedColourA[y][x].val[2]-128)-(reducedColourB[y][x].val[2]-128), 2));
 
                     }
                     else {
