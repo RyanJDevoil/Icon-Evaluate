@@ -28,3 +28,6 @@ hs_err_pid*
 *.png
 *.bmp
 *.gif
+
+# Similarity report output
+Similarity Report.txt
