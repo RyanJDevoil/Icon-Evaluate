@@ -31,7 +31,7 @@ public class ImageCompare {
         //An overall score of similarity out of 100
         similarity = calcSimilarity(backgroundDifferenceScore, foregroundIntersectScore, foregroundColourDiffScore, colourBreakdownScore);
 
-        /*
+        ///*
         System.out.println("Similarity for " + fileNameA + " & " + fileNameB);
         System.out.println("Overall Similarity: " + similarity);
         System.out.println("Background Similarity: " + backgroundDifferenceScore);
@@ -122,7 +122,9 @@ public class ImageCompare {
             }
         }
         double normalisedShapeScore = (shapeScore/maxShapeScore)*100;
-        double avgColourDistanceScore = Math.max((100-(totalColourDistance/numIntersecting))/(numTotal/numIntersecting), 0);
+        double avgColourDistanceScore = Math.max((100-(totalColourDistance/numIntersecting))*((float)numTotal/(float)numIntersecting), 0);
+        System.out.println(numTotal);
+        System.out.println(numIntersecting);
         double[] output = {normalisedShapeScore, avgColourDistanceScore};
         return output;
     }
