@@ -31,7 +31,7 @@ public class ImageCompare {
         //An overall score of similarity out of 100
         similarity = calcSimilarity(backgroundDifferenceScore, foregroundIntersectScore, foregroundColourDiffScore, colourBreakdownScore);
 
-        ///*
+        /*
         System.out.println("Similarity for " + fileNameA + " & " + fileNameB);
         System.out.println("Overall Similarity: " + similarity);
         System.out.println("Background Similarity: " + backgroundDifferenceScore);
@@ -54,7 +54,7 @@ public class ImageCompare {
                 writer.println("Background Similarity: " + Math.round(backgroundDifferenceScore) + "/100");
                 writer.println("Foreground Shape Similarity: " + Math.round(foregroundIntersectScore) + "/100");
                 writer.println("Foreground Colour Placement Similarity: " + Math.round(foregroundColourDiffScore) + "/100");
-                writer.println("Colour Usage Similarity: " + Math.round(colourBreakdownScore) + "/100");
+                writer.println("Foreground Colour Proportion Similarity: " + Math.round(colourBreakdownScore) + "/100");
                 writer.println();
             }
             else{
@@ -73,7 +73,7 @@ public class ImageCompare {
                 }
                 if(colourBreakdownScore > 50){
                     writer.println("However similar colours are used to make up the icon.");
-                    writer.println("Colour Usage Similarity: " + Math.round(colourBreakdownScore) + "/100");
+                    writer.println("Foreground Colour Proportion Similarity: " + Math.round(colourBreakdownScore) + "/100");
                 }
                 writer.println();
             }
@@ -122,7 +122,7 @@ public class ImageCompare {
             }
         }
         double normalisedShapeScore = (shapeScore/maxShapeScore)*100;
-        double avgColourDistanceScore = Math.max((100-(totalColourDistance/numIntersecting))*((float)numTotal/(float)numIntersecting), 0);
+        double avgColourDistanceScore = Math.max((100-((totalColourDistance/Math.max(numIntersecting, 1)))*((float)numTotal/Math.max(numIntersecting, 1))), 0);
         System.out.println(numTotal);
         System.out.println(numIntersecting);
         double[] output = {normalisedShapeScore, avgColourDistanceScore};

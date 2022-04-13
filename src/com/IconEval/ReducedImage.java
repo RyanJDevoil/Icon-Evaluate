@@ -45,12 +45,10 @@ public class ReducedImage {
                 }
             }
         }
-        ///*
         HighGui.imshow("ReducedBW " + fileName, bWDisplay);
         Imgproc.cvtColor(colDisplay, colDisplay, Imgproc.COLOR_Lab2BGR);
         HighGui.imshow("ReducedCol " + fileName, colDisplay);
         System.out.println(foregroundColourBreakdown);
-        //*/
 
         //Silly Thing - Reduced Rez
         //DisplayC64isedImage(colDisplay, fileName);

@@ -63,8 +63,8 @@ public class ImageStats{
         HighGui.imshow("BGLab " + fileName, bgFromLab);
         HighGui.imshow("ThresholdingLab " + fileName, foregroundMask);
         HighGui.imshow("Foreground" + fileName, foreground);
-        */
-        ///*
+        //*/
+        /*
         reduced.DisplayReducedImages(img, reducedHeight, reducedWidth, fileName);
         //*/
 

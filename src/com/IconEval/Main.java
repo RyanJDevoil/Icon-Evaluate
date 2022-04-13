@@ -42,7 +42,7 @@ public class Main {
         catch(Exception e){
             System.out.println("The icons directory is empty or inaccessible.");
         }
-        ///*
+        /*
         HighGui.waitKey(0);
         HighGui.destroyAllWindows();
         //*/
