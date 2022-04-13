@@ -105,7 +105,7 @@ public class ImageCompare {
         for (int y = 0; y < reducedProfileA.length; y++){
             for (int x = 0; x < reducedProfileA[0].length; x++){
                 if (reducedProfileA[y][x] == 1 || reducedProfileB[y][x] == 1){
-                    double weightedVal = Math.pow((Math.sqrt(Math.pow(y-midY, 2)+Math.pow(x-midX, 2))/4), 2);
+                    double weightedVal = Math.pow(Math.sqrt(Math.pow(y-midY, 2)+Math.pow(x-midX, 2)), 2);
                     numTotal += 1;
                     if (reducedProfileA[y][x] == 1 && reducedProfileB[y][x] == 1){
                         maxShapeScore += weightedVal;
